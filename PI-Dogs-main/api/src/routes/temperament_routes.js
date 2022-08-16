@@ -1,30 +1,34 @@
 const { Router } = require("express");
-const { getAllDogs } = require("../controllers/controllers.js");
+const { getAllDogs, getInfoApi } = require("../controllers/controllers.js");
 const { Temperament } = require("../db.js");
 const temperament = Router();
+const { YOUR_API_KEY } = process.env;
 
 temperament.get("/", async (req, res) => {
-  const listTemperaments = [];
-  const temperaments = (await getAllDogs()).map((d) => {
-    return d.temperament;
-  });
-  temperaments.forEach((t) => {
-    if (t !== undefined) {
-      let array = t.split(", ");
-      array.forEach((t) => {
+  try {
+    const listTemperaments = [];
+    const apiDogs = await getAllDogs();
+    // console.log(apiDogs);
+    const temperaments = apiDogs.map((d) => d.temperaments).flat();
+    // console.log(temperaments);
+    //temperaments es un array de arrays al momento ....
+    temperaments?.forEach((t) => {
+      if (t !== undefined) {
         if (!listTemperaments.includes(t)) {
           listTemperaments.push(t);
         }
-      });
-    }
-  });
-  listTemperaments.forEach((t) => {
-    Temperament.findOrCreate({ where: { name: t } });
-  });
-  const allTemperaments = await Temperament.findAll();
-  if (allTemperaments) {
+      }
+    });
+    // console.log(listTemperaments);
+    listTemperaments.forEach((t) => {
+      Temperament.findOrCreate({ where: { name: t } });
+    });
+    const allTemperaments = await Temperament.findAll();
+    // console.log(allTemperaments);
     res.status(200).json(allTemperaments);
-  } else res.status(404).send("The temperaments have not been found");
+  } catch (error) {
+    console.log({ error: error.message });
+  }
 });
 
 module.exports = temperament;

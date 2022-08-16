@@ -32,17 +32,13 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      life_span_Min: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-      },
-      life_span_Max: {
-        type: DataTypes.INTEGER,
+      life_span: {
+        type: DataTypes.STRING,
         allowNull: true,
       },
       image: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
       },
       createdInDb: {
         type: DataTypes.BOOLEAN,
