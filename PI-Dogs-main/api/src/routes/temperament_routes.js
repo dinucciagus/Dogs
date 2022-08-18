@@ -10,16 +10,16 @@ temperament.get("/", async (req, res) => {
     const apiDogs = await getAllDogs();
     // console.log(apiDogs);
     const temperaments = apiDogs.map((d) => d.temperaments).flat();
-    // console.log(temperaments);
+    // console.log("TEMPERAMENTS", temperaments);
     //temperaments es un array de arrays al momento ....
     temperaments?.forEach((t) => {
       if (t !== undefined) {
-        if (!listTemperaments.includes(t)) {
-          listTemperaments.push(t);
+        if (!listTemperaments.includes(t.name)) {
+          listTemperaments.push(t.name);
         }
       }
     });
-    // console.log(listTemperaments);
+    // console.log("LISTTEMPERAMENTS", listTemperaments);
     listTemperaments.forEach((t) => {
       Temperament.findOrCreate({ where: { name: t } });
     });

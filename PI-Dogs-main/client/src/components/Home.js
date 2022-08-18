@@ -18,7 +18,7 @@ export default function Home() {
   const dispatch = useDispatch();
   const allDogs = useSelector((state) => state.dogs);
   const allTemps = useSelector((state) => state.temperaments);
-  console.log(allTemps);
+  // console.log(allTemps);
   const [currentPage, setCurrentPage] = useState(1);
   const [dogsPerPage, setDogsPerPage] = useState(8);
   const iOfLastDog = currentPage * dogsPerPage;
@@ -26,18 +26,13 @@ export default function Home() {
   const currentDogs = allDogs.slice(iOfFirstDog, iOfLastDog);
   const [order, setOrder] = useState("asc");
   const [wOrder, setWOrder] = useState("");
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const paginated = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
   useEffect(() => {
-    setLoading(true);
     dispatch(getDogs());
-    setLoading(false);
-  }, [dispatch]);
-
-  useEffect(() => {
     dispatch(getTemperaments());
   }, [dispatch]);
 
@@ -102,7 +97,7 @@ export default function Home() {
         <option value="title" disabled selected>
           Filter by: Origin
         </option>
-        <option value="all">All</option>
+        <option value="All">All</option>
         <option value="created">Created</option>
         <option value="from api">Existing</option>
       </select>
@@ -128,7 +123,7 @@ export default function Home() {
       {currentDogs &&
         currentDogs.map((d) => {
           return (
-            <Link key={d.id} to={"/home/" + d.id}>
+            <Link key={d.id} to={"/dogs/" + d.id}>
               <DogCard
                 name={d.name}
                 image={d.image}

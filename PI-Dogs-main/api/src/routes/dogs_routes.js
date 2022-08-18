@@ -8,9 +8,10 @@ dogs.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     if (id) {
-      let raceid = (await getAllDogs()).find((r) => r.id.toString() === id);
-      if (raceid) {
-        res.status(200).json(raceid);
+      let breedid = (await getAllDogs()).find((r) => r.id.toString() === id);
+      if (breedid) {
+        // res.status(200).json(breedid);
+        res.status(200).send(breedid);
       } else {
         res.status(404).send("The indicated Id has not associated breed");
       }
@@ -28,9 +29,11 @@ dogs.get("/", async (req, res) => {
       let breed = await listOfDogs.filter((b) =>
         b.name.toLowerCase().includes(name.toLowerCase())
       );
-      breed
+      breed.length > 0
         ? res.status(200).send(breed)
-        : res.status(404).send("The indicated breed does not exists");
+        : res
+            .status(404)
+            .json({ error: "The indicated breed does not exists" });
     } else {
       res.status(200).json(listOfDogs);
     }

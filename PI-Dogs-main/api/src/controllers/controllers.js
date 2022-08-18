@@ -10,8 +10,12 @@ const getInfoApi = async () => {
     const infoApi = await urlApi.data.map((el) => {
       let temp = [];
       if (el.temperament !== undefined) {
-        temp = el.temperament.split(", ");
+        let arrayTemp = el.temperament.split(", ");
+        temp = arrayTemp.map((t) => {
+          return { name: t };
+        });
       } else temp = el.temperament;
+      // console.log(temp);
       return {
         name: el.name,
         id: el.id,

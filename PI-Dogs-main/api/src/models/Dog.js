@@ -15,22 +15,59 @@ module.exports = (sequelize) => {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          startsWithCapital() {
+            if (this.name[0] !== this.name[0].toUpperCase()) {
+              throw new Error(
+                "The name of the breed should start with capital letter"
+              );
+            }
+          },
+          has2Characters() {
+            if (this.name.length < 2) {
+              throw new Error(
+                "The name of the breed should have at least two letters"
+              );
+            }
+          },
+        },
+        unique: true,
       },
       height_Min: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        validate: { min: 0 },
       },
       height_Max: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        validate: {
+          isLowerThan() {
+            if (this.height_Max < this.height_Min) {
+              throw new Error(
+                "The Maximum height should be greater than the minimum height"
+              );
+            }
+          },
+        },
       },
       weight_Min: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        validate: { min: 0 },
       },
       weight_Max: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        validate: {
+          isLowerThan() {
+            if (this.weight_Max < this.weight_Min) {
+              throw new Error(
+                "The Maximum weight should be greater than the minimum weight"
+              );
+            }
+          },
+        },
       },
       life_span: {
         type: DataTypes.STRING,
@@ -38,7 +75,10 @@ module.exports = (sequelize) => {
       },
       image: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
+        defaultValue:
+          "https://cutewallpaper.org/24/dog-gif-transparent/cat-dog-gif-storyboard-on-behance.gif",
+        validate: { isUrl: true },
       },
       createdInDb: {
         type: DataTypes.BOOLEAN,

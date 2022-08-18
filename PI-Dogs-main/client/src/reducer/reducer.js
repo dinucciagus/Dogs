@@ -7,13 +7,13 @@ import {
   ORDER_BY_NAME,
   GET_DOGS_BY_NAME,
   CREATE_DOG,
+  GET_DOG_DETAIL,
+  SET_LOADING,
 } from "../actions";
 
 const initialState = {
   dogs: [],
   allDogs: [],
-  // dogsFilteredbyTemp :[],
-  // dogsFilteredbyOrigin:[],
   dogDetails: {},
   temperaments: [],
 };
@@ -40,11 +40,11 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         dogs: action.payload,
       };
-    // case GET_DOG_DETAILS:
-    //   return {
-    //     ...state,
-    //     dogDetails: action.payload,
-    //   };
+    case GET_DOG_DETAIL:
+      return {
+        ...state,
+        dogDetails: action.payload,
+      };
     case ORDER_BY_NAME:
       let orderedDogs =
         action.payload === "name_asc"
@@ -87,20 +87,19 @@ export default function rootReducer(state = initialState, action) {
         dogs: orderDogs,
       };
 
-    case GET_TEMPERAMENTS:
-      return { ...state, temperaments: action.payload };
-
     case FILTER_BY_TEMPERAMENTS:
       const allDogs = state.allDogs;
-      console.log(allDogs);
-      // console.log(allDogs[0].temperaments);
+      // console.log(allDogs);
+      // console.log(allDogs[0].temperaments.map((t) => console.log(t)));
       // console.log(allDogs[0].temperaments[0]);
-      // console.log(allDogs[0].temperaments.includes("Stubborn"));
+      // console.log(allDogs[0].temperaments.name.includes("Stubborn"));
 
       const tempsFilter =
         action.payload === "All"
           ? allDogs
-          : allDogs.filter((d) => d.temperaments?.includes(action.payload));
+          : allDogs.filter((d) => {
+              return d.temperaments?.find((t) => t.name === action.payload);
+            });
       return {
         ...state,
         dogs: tempsFilter,
@@ -108,17 +107,23 @@ export default function rootReducer(state = initialState, action) {
 
     case FILTER_BY_ORIGIN:
       const allDogsB = state.allDogs;
+      // console.log(allDogsB);
       const createdFilter =
         action.payload === "created"
-          ? allDogsB.filter((el) => el.createdInDb === true)
-          : allDogsB.filter((el) => el.createdinDb !== true);
+          ? // ? allDogsB.filter((el) => el.createdinDb)
+            // : allDogsB.filter((el) => !el.hasOwnProperty("createdinDb"));
+            allDogsB.filter((el) => el.createdInDb)
+          : allDogsB.filter((el) => !el.createdInDb);
+      // console.log(createdFilter);
       return {
         ...state,
-        dogs: action.payload === "All" ? allDogsB : createdFilter,
+        dogs: action.payload === "All" ? state.allDogs : createdFilter,
       };
-
-    // case SET_LOADING:
-    //   return {};
+    case SET_LOADING:
+      return {
+        ...state,
+        loading: false,
+      };
     default:
       return state;
   }

@@ -8,52 +8,57 @@ export const ORDER_BY_WEIGHT = "ORDER_BY_WEIGHT";
 export const ORDER_BY_NAME = "ORDER_BY_NAME";
 export const GET_DOGS_BY_NAME = "GET_DOGS_BY_NAME";
 export const CREATE_DOG = "CREATE_DOG";
+export const GET_DOG_DETAIL = "GET_DOG_DETAIL";
+export const SET_LOADING = "SET_LOADING";
 
 export function getDogs() {
-  try {
-    return async function (dispatch) {
+  return async function (dispatch) {
+    try {
       var json = await axios.get("http://localhost:3001/dogs");
       return dispatch({ type: GET_DOGS, payload: json.data });
-    };
-  } catch (error) {
-    console.log({ error: error.message });
-  }
+    } catch (error) {
+      console.log({ error: error.message });
+    }
+  };
 }
 
 export function createDog(payload) {
-  try {
-    return async function (dispatch) {
+  return async function (dispatch) {
+    try {
       var json = await axios.post("http://localhost:3001/dog", payload);
       return json;
-    };
-  } catch (error) {
-    console.log({ error: error.message });
-  }
+    } catch (error) {
+      console.log({ error: error.message });
+    }
+  };
 }
 
 export function getDogsByName(name) {
-  try {
-    return async function (dispatch) {
+  return async function (dispatch) {
+    try {
       var json = await axios.get("http://localhost:3001/dogs?name=" + name);
       return dispatch({
         type: GET_DOGS_BY_NAME,
         payload: json.data,
       });
-    };
-  } catch (error) {
-    console.log({ error: error.message });
-  }
+    } catch (error) {
+      console.log({ error: error.message });
+      return alert(
+        "Sorry! There is no dog with the given name... Search for another =) "
+      );
+    }
+  };
 }
 
 export function getTemperaments() {
-  try {
-    return async function (dispatch) {
+  return async function (dispatch) {
+    try {
       var info = await axios.get("http://localhost:3001/temperaments");
       return dispatch({ type: GET_TEMPERAMENTS, payload: info.data });
-    };
-  } catch (error) {
-    console.log({ error: error.message });
-  }
+    } catch (error) {
+      console.log({ error: error.message });
+    }
+  };
 }
 
 export function orderByWeight(payload) {
@@ -82,4 +87,22 @@ export function filterByOrigin(payload) {
     type: FILTER_BY_ORIGIN,
     payload,
   };
+}
+
+export function getDogDetails(id) {
+  return async (dispatch) => {
+    try {
+      var json = await axios.get(`http://localhost:3001/dogs/${id}`);
+      return dispatch({
+        type: GET_DOG_DETAIL,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function setLoading() {
+  return { type: SET_LOADING };
 }

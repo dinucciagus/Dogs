@@ -3,13 +3,14 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 // import { Link } from "react-router-dom";
 import { getDogsByName } from "../actions";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 //importar css para darle estilo.
 
 function SearchBar() {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
+  const dogs = useSelector((state) => state.dogs);
   // const name = useSelector (state => state.name);
 
   function handleInput(e) {
@@ -19,6 +20,7 @@ function SearchBar() {
 
   function handleSubmit(e) {
     e.preventDefault();
+
     if (name !== "") {
       dispatch(getDogsByName(name));
       setName("");

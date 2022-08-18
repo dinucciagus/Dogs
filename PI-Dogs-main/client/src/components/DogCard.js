@@ -24,7 +24,7 @@ export default function DogCard({
       <h4>Temperaments:</h4>
       <ul>
         {temperaments.map((t) => {
-          return <li>{t}</li>;
+          return <li>{t.name}</li>;
         })}
       </ul>
     </div>
