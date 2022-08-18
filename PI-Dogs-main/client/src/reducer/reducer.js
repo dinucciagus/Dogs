@@ -8,7 +8,6 @@ import {
   GET_DOGS_BY_NAME,
   CREATE_DOG,
   GET_DOG_DETAIL,
-  SET_LOADING,
 } from "../actions";
 
 const initialState = {
@@ -16,6 +15,7 @@ const initialState = {
   allDogs: [],
   dogDetails: {},
   temperaments: [],
+  loading: true,
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -118,11 +118,6 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         dogs: action.payload === "All" ? state.allDogs : createdFilter,
-      };
-    case SET_LOADING:
-      return {
-        ...state,
-        loading: false,
       };
     default:
       return state;

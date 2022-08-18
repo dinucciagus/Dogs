@@ -9,7 +9,6 @@ export const ORDER_BY_NAME = "ORDER_BY_NAME";
 export const GET_DOGS_BY_NAME = "GET_DOGS_BY_NAME";
 export const CREATE_DOG = "CREATE_DOG";
 export const GET_DOG_DETAIL = "GET_DOG_DETAIL";
-export const SET_LOADING = "SET_LOADING";
 
 export function getDogs() {
   return async function (dispatch) {
@@ -98,11 +97,11 @@ export function getDogDetails(id) {
         payload: json.data,
       });
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
+      return dispatch({
+        type: GET_DOG_DETAIL,
+        payload: { error: error.message },
+      });
     }
   };
-}
-
-export function setLoading() {
-  return { type: SET_LOADING };
 }

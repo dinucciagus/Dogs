@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import DogCard from "./DogCard";
 import Paginated from "./paginated";
 import SearchBar from "./SearchBar";
+import LOADING from "../assets/LOADING.gif";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -26,7 +27,6 @@ export default function Home() {
   const currentDogs = allDogs.slice(iOfFirstDog, iOfLastDog);
   const [order, setOrder] = useState("asc");
   const [wOrder, setWOrder] = useState("");
-  // const [loading, setLoading] = useState(false);
   const paginated = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -120,7 +120,7 @@ export default function Home() {
         paginated={paginated}
       />
       <SearchBar />
-      {currentDogs &&
+      {currentDogs.length ? (
         currentDogs.map((d) => {
           return (
             <Link key={d.id} to={"/dogs/" + d.id}>
@@ -134,7 +134,12 @@ export default function Home() {
               />
             </Link>
           );
-        })}
+        })
+      ) : (
+        <div>
+          <img src={LOADING} alt="Loading" />
+        </div>
+      )}
     </div>
   );
 }

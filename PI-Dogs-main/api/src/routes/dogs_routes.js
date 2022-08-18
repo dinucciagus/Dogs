@@ -10,14 +10,13 @@ dogs.get("/:id", async (req, res) => {
     if (id) {
       let breedid = (await getAllDogs()).find((r) => r.id.toString() === id);
       if (breedid) {
-        // res.status(200).json(breedid);
         res.status(200).send(breedid);
       } else {
         res.status(404).send("The indicated Id has not associated breed");
       }
     }
   } catch (error) {
-    console.log({ error: error.message });
+    res.status(404).json({ error: error.message });
   }
 });
 

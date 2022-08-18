@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getDogDetails } from "../actions";
 import Error404 from "./Error404.js"; // si no encuentro el dog muestro el 404
+import LOADING from "../assets/LOADING.gif";
 
 export default function DogDetails() {
   const dispatch = useDispatch();
@@ -13,7 +14,6 @@ export default function DogDetails() {
   }, [dispatch, id]);
 
   const dogDetails = useSelector((state) => state.dogDetails);
-
   const {
     name,
     weight_Min,
@@ -24,12 +24,16 @@ export default function DogDetails() {
     image,
     temperaments,
   } = dogDetails;
-
+  console.log(dogDetails);
   return (
     <div>
-      {!name ? (
+      {dogDetails.error ? (
         <div>
           <Error404 />
+        </div>
+      ) : !name ? (
+        <div>
+          <img src={LOADING} alt="Loading" />
         </div>
       ) : (
         <div>
@@ -64,6 +68,11 @@ export default function DogDetails() {
           ))}
         </div>
       )}
+      {/* ) : (
+        <div>
+          <img src={LOADING} alt="Loading" />
+        </div>
+      )} */}
     </div>
   );
 }
