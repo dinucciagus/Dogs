@@ -155,22 +155,21 @@ export default function DogCreate() {
           "https://cutewallpaper.org/24/dog-gif-transparent/cat-dog-gif-storyboard-on-behance.gif",
       });
     }
-    if (e.id === "create") {
-      dispatch(createDog(input));
-      alert("Dog created successfully! =)");
-      setInput({
-        name: "",
-        height_Min: 0,
-        height_Max: 0,
-        weight_Min: 0,
-        weight_Max: 0,
-        life_span_Max: 0,
-        life_span_Min: 0,
-        image: "",
-        temperaments: [],
-      });
-      history.push("/home");
-    }
+
+    dispatch(createDog(input));
+    alert("Dog created successfully! =)");
+    setInput({
+      name: "",
+      height_Min: 0,
+      height_Max: 0,
+      weight_Min: 0,
+      weight_Max: 0,
+      life_span_Max: 0,
+      life_span_Min: 0,
+      image: "",
+      temperaments: [],
+    });
+    history.push("/home");
   }
 
   return (
@@ -275,7 +274,7 @@ export default function DogCreate() {
         </select>
         {input.temperaments.map((t) => (
           <h5 id={t}>
-            {t} <button onClick={() => handleDelete(t)}>X</button>
+            {t} <p onClick={() => handleDelete(t)}>X</p>
           </h5>
         ))}
         {errorsTemps.temp > 0 && <p>{errorsTemps.temp}</p>}

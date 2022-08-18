@@ -43,7 +43,7 @@ export function getDogsByName(name) {
       });
     } catch (error) {
       console.log({ error: error.message });
-      return alert(
+      alert(
         "Sorry! There is no dog with the given name... Search for another =) "
       );
     }
