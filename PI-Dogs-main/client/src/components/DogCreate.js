@@ -1,15 +1,19 @@
 import React, { useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { createDog, getTemperaments } from "../actions";
+import { createDog, getTemperaments, getDogs } from "../actions";
 import { useState } from "react";
+import dogpic from "../assets/backgroundi.png";
+import "./styles/Create.css";
 
 export default function DogCreate() {
   const dispatch = useDispatch();
   const temperaments = useSelector((state) => state.temperaments);
+  const dogs = useSelector((state) => state.allDogs);
   const history = useHistory();
   const [errors, setErrors] = useState({});
   const [errorsTemps, setErrorsTemps] = useState({});
+  // const [,selectDis setSelectDis] = useState(false);
   const [isdisabled, setIsDisabled] = useState(true);
   const [input, setInput] = useState({
     name: "",
@@ -35,45 +39,49 @@ export default function DogCreate() {
       input.name[0] !== input.name[0].toUpperCase()
     ) {
       errors.name =
-        "The name of the breed should be at least 2 letters long and should start with uppercase";
+        "*The name of the breed should be at least 2 letters long and should start with uppercase";
+    } else if (
+      dogs.find((p) => p.name.toLowerCase() === input.name.toLowerCase())
+    ) {
+      errors.name = "*A breed with that name already exists";
     } else if (
       !input.height_Min ||
       isNaN(input.height_Min) ||
       input.height_Min < 0
     ) {
-      errors.min_height = "The minimum height should be a positive number";
+      errors.min_height = "*The minimum height should be a positive number";
     } else if (
       !input.height_Max ||
       isNaN(input.height_Max) ||
       Number(input.height_Max) < input.height_Min
     ) {
       errors.max_height =
-        "The maximum height should be greater than the minimum height";
+        "*The maximum height should be greater than the minimum height";
     } else if (
       !input.weight_Min ||
       isNaN(input.weight_Min) ||
       input.weight_Min < 0
     ) {
-      errors.min_weight = "The minimum weight should be a positive number";
+      errors.min_weight = "*The minimum weight should be a positive number";
     } else if (
       !input.weight_Max ||
       isNaN(input.weight_Max) ||
       Number(input.weight_Max) < input.weight_Min
     ) {
       errors.max_weight =
-        "The maximum weight should be greater than the minimum weight";
+        "*The maximum weight should be greater than the minimum weight";
     } else if (isNaN(input.life_span_Min) || input.life_span_Min < 0) {
       errors.life_span_Min =
-        "The minimum life span should be a positive number";
+        "*The minimum life span should be a positive number";
     } else if (
       isNaN(input.life_span_Max) ||
       Number(input.life_span_Max) < input.life_span_Min
     ) {
       errors.life_span_Max =
-        "The maximum life span should be greater than the minimum life span";
+        "*The maximum life span should be greater than the minimum life span";
     } else if (!isUrlImage(input.image) && input.image.length > 0) {
       errors.image =
-        "The image should be a jpg, jpeg, png, webp, avif, gif or svg";
+        "*The image should be a jpg, jpeg, png, webp, avif, gif or svg";
     }
     return errors;
   }
@@ -81,13 +89,14 @@ export default function DogCreate() {
   function validateTemps(input) {
     let errorsTemps = {};
     if (input.temperaments.length === 0 || input.temperaments.length > 5) {
-      errorsTemps.temp = "Select up to 5 temperaments for the breed";
+      errorsTemps.temp = "*Select up to 5 temperaments for the breed";
     }
     return errorsTemps;
   }
 
   useEffect(() => {
     dispatch(getTemperaments());
+    dispatch(getDogs());
   }, [dispatch]);
 
   function handleChange(e) {
@@ -104,8 +113,10 @@ export default function DogCreate() {
   }
 
   function handleSelect(e) {
-    console.log(input.temperaments);
-    if (!input.temperaments.includes(e.target.value)) {
+    if (
+      !input.temperaments.includes(e.target.value) &&
+      input.temperaments.length < 5
+    ) {
       setInput({
         ...input,
         temperaments: [...input.temperaments, e.target.value],
@@ -173,130 +184,135 @@ export default function DogCreate() {
   }
 
   return (
-    <div>
-      <Link to="/home">
-        <button>Back</button>
-      </Link>
-      <h1> Create your Dog</h1>
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <div>
-          <label>Name: </label>
-          <input
-            type="text"
-            value={input.name}
-            name="name"
-            onChange={(e) => handleChange(e)}
-          />
-          {errors.name && <p>{errors.name}</p>}
+    <div className="Containercreate">
+      <div className="createDog">
+        <Link to="/home" className="Back">
+          <button>Back</button>
+        </Link>
+        <h1 ClasName="dogTitle"> Create your dog</h1>
+        <div className="errorContainer">
+          {errors.name && <p className="error">{errors.name}</p>}
+          {errors.min_height && <p className="error">{errors.min_height}</p>}
+          {errors.max_height && <p className="error">{errors.max_height}</p>}
+          {errors.min_weight && <p className="error">{errors.min_weight}</p>}
+          {errors.max_weight && <p className="error">{errors.max_weight}</p>}
+          {errors.life_span_Min && (
+            <p className="error">{errors.life_span_Min}</p>
+          )}
+          {errors.life_span_Max && (
+            <p className="error">{errors.life_span_Max}</p>
+          )}
+          {errors.image && <p className="error">{errors.image}</p>}
+          {errorsTemps.temp > 0 && <p className="error">{errorsTemps.temp}</p>}
         </div>
-        <div>
-          <label>Minimum height: </label>
-          <input
-            type="number"
-            value={input.height_Min}
-            name="height_Min"
-            onChange={(e) => handleChange(e)}
-          />
-          {errors.min_height && <p>{errors.min_height}</p>}
-        </div>
-        <div>
-          <label>Maximum height: </label>
-          <input
-            type="number"
-            value={input.height_Max}
-            name="height_Max"
-            onChange={(e) => handleChange(e)}
-          />
-          {errors.max_height && <p>{errors.max_height}</p>}
-        </div>
-        <div>
-          <label>Minimum weight: </label>
-          <input
-            type="number"
-            value={input.weight_Min}
-            name="weight_Min"
-            onChange={(e) => handleChange(e)}
-          />
-          {errors.min_weight && <p>{errors.min_weight}</p>}
-        </div>
-        <div>
-          <label>Maximum weight: </label>
-          <input
-            type="number"
-            value={input.weight_Max}
-            name="weight_Max"
-            onChange={(e) => handleChange(e)}
-          />
-          {errors.max_weight && <p>{errors.max_weight}</p>}
-        </div>
-        <div>
-          <label>Life span: </label>
-          {/* <input
-            type="text"
-            value={input.life_span}
-            name="life_span"
-            onChange={(e) => handleChange(e)}
-          /> */}
-          <input
-            type="number"
-            value={input.life_span_Min}
-            name="life_span_Min"
-            onChange={(e) => handleChange(e)}
-          />
-          - to -
-          <input
-            type="number"
-            value={input.life_span_Max}
-            name="life_span_Max"
-            onChange={(e) => handleChange(e)}
-          />
-          - years
-          {errors.life_span_Min && <p>{errors.life_span_Min}</p>}
-          {errors.life_span_Max && <p>{errors.life_span_Max}</p>}
-        </div>
-        <div>
-          <label>Image URL: </label>
-          <input
-            type="text"
-            value={input.image}
-            name="image"
-            onChange={(e) => handleChange(e)}
-          />
-          {errors.image && <p>{errors.image}</p>}
-        </div>
-        <label> Temperaments: </label>
-        <select onChange={(e) => handleSelect(e)}>
-          {temperaments.map((t) => (
-            <option key={t.id} value={t.name}>
-              {t.name}
-            </option>
-          ))}
-        </select>
-        {input.temperaments.map((t) => (
-          <h5 id={t}>
-            {t} <p onClick={() => handleDelete(t)}>X</p>
-          </h5>
-        ))}
-        {errorsTemps.temp > 0 && <p>{errorsTemps.temp}</p>}
-        {/* <ul>
-          {input.temperaments.map((t) => (
-            <li>
-              {t} <button onClick={() => handleDelete(t)}> X</button>
-            </li>
-          ))}
-        </ul> */}
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <div>
+            <label>Name: </label>
+            <input
+              type="text"
+              value={input.name}
+              name="name"
+              onChange={(e) => handleChange(e)}
+              placeholder="Type the breed name..."
+            />
+          </div>
+          <div>
+            <label>Minimum height: </label>
+            <input
+              type="number"
+              value={input.height_Min}
+              name="height_Min"
+              onChange={(e) => handleChange(e)}
+            />
+          </div>
+          <div>
+            <label>Maximum height: </label>
+            <input
+              type="number"
+              value={input.height_Max}
+              name="height_Max"
+              onChange={(e) => handleChange(e)}
+            />
+          </div>
+          <div>
+            <label>Minimum weight: </label>
+            <input
+              type="number"
+              value={input.weight_Min}
+              name="weight_Min"
+              onChange={(e) => handleChange(e)}
+            />
+          </div>
+          <div>
+            <label>Maximum weight: </label>
+            <input
+              type="number"
+              value={input.weight_Max}
+              name="weight_Max"
+              onChange={(e) => handleChange(e)}
+            />
+          </div>
+          <div>
+            <label>Life span: </label>
+            <input
+              type="number"
+              value={input.life_span_Min}
+              name="life_span_Min"
+              onChange={(e) => handleChange(e)}
+            />
+            - to -
+            <input
+              type="number"
+              value={input.life_span_Max}
+              name="life_span_Max"
+              onChange={(e) => handleChange(e)}
+            />
+            - years
+          </div>
+          <div>
+            <label>Image URL: </label>
+            <input
+              type="text"
+              value={input.image}
+              name="image"
+              onChange={(e) => handleChange(e)}
+              placeholder="Type a URL image..."
+            />
+          </div>
+          <label> Temperaments: </label>
+          <select
+            disabled={input.temperaments.length > 4}
+            onChange={(e) => handleSelect(e)}
+          >
+            {temperaments.map((t) => (
+              <option key={t.id} value={t.name}>
+                {t.name}
+              </option>
+            ))}
+          </select>
+          <div ClasName="listTemp">
+            <ul>
+              {input.temperaments.map((t) => (
+                <li id={t} onClick={() => handleDelete(t)}>
+                  {t} <span>X</span>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-        <br></br>
-        <div>
-          <input
-            id="create"
-            name="create"
-            type="submit"
-            value="create Dog!"
-            disabled={isdisabled}
-          />
-        </div>
-      </form>
+          <div>
+            <input
+              className="CreateButton"
+              id="create"
+              name="create"
+              type="submit"
+              value="Create dog!"
+              disabled={isdisabled}
+            />
+          </div>
+        </form>
+        <img className="DogPic" src={dogpic} alt="Dog breed" />
+      </div>
     </div>
   );
 }

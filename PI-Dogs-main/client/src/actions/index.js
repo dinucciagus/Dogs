@@ -28,6 +28,7 @@ export function createDog(payload) {
       return json;
     } catch (error) {
       console.log({ error: error.message });
+      alert("Sorry! The dog could not be created. Try again!  ");
     }
   };
 }

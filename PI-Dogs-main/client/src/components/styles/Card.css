@@ -1,0 +1,63 @@
+.card {
+  background-color: rgba(255, 255, 255, 0.674);
+  border-radius: 30px;
+  border-width: 2px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: 10px auto;
+  padding: 5px;
+  padding-left: 10px;
+}
+
+.card:hover {
+  size: 150%;
+}
+.card img:hover {
+  transform: perspective(800px) rotateY(0deg);
+  opacity: 1;
+}
+
+.img {
+  width: 200px;
+  height: 200px;
+  border-radius: 100%;
+  object-fit: cover;
+}
+
+.img:hover {
+  border-radius: 30px;
+  width: auto;
+  object-fit: cover;
+}
+
+.name {
+  font-family: Segoe Print;
+  font-weight: bolder;
+  text-align: center;
+}
+
+.temperaments {
+  overflow: auto;
+}
+
+.weight {
+  overflow: auto;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.weight h5 {
+  margin-left: 10px;
+}
+
+.textCont {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

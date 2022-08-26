@@ -1,4 +1,6 @@
 import React from "react";
+// import "./styles/Card.css";
+import "./styles/Card.css";
 
 export default function DogCard({
   image,
@@ -12,21 +14,25 @@ export default function DogCard({
     temperaments = ["No temperaments associated to this breed"];
   }
   return (
-    <div key={id}>
-      <h3>{name}</h3>
-      <img src={image} alt="img not found" width="200px" height="200px" />
-      <div>
-        <h4>Weight</h4>
-        <h5>
-          Min: {weight_Min} - Max:{weight_Max}
-        </h5>
+    <div key={id} className="card">
+      <img className="img" src={image} alt="img not found" />
+      <h3 className="name">{name}</h3>
+      <div className="textCont">
+        <div className="weight">
+          <h4 className="subtitle">Weight</h4>
+          <h5>
+            Min: {weight_Min} - Max:{weight_Max}
+          </h5>
+        </div>
+        <div className="temperaments">
+          <h4 className="subtitle">Temperaments:</h4>
+          <p>
+            {temperaments.map((t) => {
+              return t.name + " |  ";
+            })}
+          </p>
+        </div>
       </div>
-      <h4>Temperaments:</h4>
-      <ul>
-        {temperaments.map((t) => {
-          return <li>{t.name}</li>;
-        })}
-      </ul>
     </div>
   );
 }

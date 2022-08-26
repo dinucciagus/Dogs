@@ -16,6 +16,8 @@ const initialState = {
   dogDetails: {},
   temperaments: [],
   loading: true,
+  dogsOrigin: [],
+  dogsTemperaments: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -25,6 +27,8 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         dogs: action.payload,
         allDogs: action.payload,
+        dogsOrigin: action.payload,
+        dogsTemperaments: action.payload,
       };
     case CREATE_DOG:
       return {
@@ -89,35 +93,44 @@ export default function rootReducer(state = initialState, action) {
 
     case FILTER_BY_TEMPERAMENTS:
       const allDogs = state.allDogs;
-      // console.log(allDogs);
-      // console.log(allDogs[0].temperaments.map((t) => console.log(t)));
-      // console.log(allDogs[0].temperaments[0]);
-      // console.log(allDogs[0].temperaments.name.includes("Stubborn"));
-
+      const allDogsOrigin = state.dogsOrigin;
       const tempsFilter =
         action.payload === "All"
           ? allDogs
           : allDogs.filter((d) => {
               return d.temperaments?.find((t) => t.name === action.payload);
             });
+      let intersection =
+        state.dogsOrigin.length > 0
+          ? tempsFilter.filter((x) => allDogsOrigin.includes(x))
+          : tempsFilter;
+      if (intersection.length === 0) {
+        intersection = ["error"];
+      }
       return {
         ...state,
-        dogs: tempsFilter,
+        dogsTemperaments: tempsFilter,
+        dogs: intersection,
       };
 
     case FILTER_BY_ORIGIN:
       const allDogsB = state.allDogs;
-      // console.log(allDogsB);
+      const allDogsTemps = state.dogsTemperaments;
       const createdFilter =
         action.payload === "created"
-          ? // ? allDogsB.filter((el) => el.createdinDb)
-            // : allDogsB.filter((el) => !el.hasOwnProperty("createdinDb"));
-            allDogsB.filter((el) => el.createdInDb)
+          ? allDogsB.filter((el) => el.createdInDb)
           : allDogsB.filter((el) => !el.createdInDb);
-      // console.log(createdFilter);
+      let intersectionB =
+        state.dogsTemperaments.length > 0
+          ? createdFilter.filter((x) => allDogsTemps.includes(x))
+          : createdFilter;
+      if (intersectionB.length === 0) {
+        intersectionB = ["error"];
+      }
       return {
         ...state,
-        dogs: action.payload === "All" ? state.allDogs : createdFilter,
+        dogsOrigin: createdFilter,
+        dogs: intersectionB,
       };
     default:
       return state;

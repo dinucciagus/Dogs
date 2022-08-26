@@ -15,7 +15,6 @@ const getInfoApi = async () => {
           return { name: t };
         });
       } else temp = el.temperament;
-      // console.log(temp);
       return {
         name: el.name,
         id: el.id,
@@ -39,41 +38,12 @@ const getInfoDb = async () => {
   try {
     const dogs = await Dog.findAll({
       include: Temperament,
-      //  {
-      // model: Temperament,
-      // attributes: ["name"],
-      // through: {
-      //   attributes: [],
-      // },
-      // },
     });
     return dogs;
   } catch (error) {
     console.log({ error: error.message });
   }
 };
-
-//     const info = dogs.map((el) => {
-//       // let temp = el.temperament.map((te) => te.name);
-//       let temp = el.temperament;
-//       return {
-//         id: el.id,
-//         name: el.name,
-//         height_Min: el.height_Min,
-//         height_Max: el.height_Max,
-//         weight_Min: el.weight_Min,
-//         weight_Max: el.weight_Max,
-//         life_span: el.life_span,
-//         image: el.image,
-//         createdInDb: true,
-//         temperament: temp,
-//       };
-//     });
-//     return info;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
 
 const getAllDogs = async () => {
   try {

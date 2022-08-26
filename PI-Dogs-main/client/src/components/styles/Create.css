@@ -1,0 +1,137 @@
+.Containercreate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+}
+
+.createDog {
+  padding-top: 100px;
+  margin-top: 25px;
+  border-radius: 20px;
+  height: 500px;
+  width: 1000px;
+  background-color: white;
+  border-style: groove;
+  border-color: black;
+  border-width: 2px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+}
+.createDog form {
+  padding-top: 30px;
+}
+.createDog button {
+  position: absolute;
+  top: 45px;
+  left: 285px;
+  background-color: #ffea27;
+  border: none;
+  border-radius: 15px;
+  color: black;
+  padding: 10px 25px;
+  justify-content: center;
+  font-size: 25px;
+  font-family: Calibri;
+  margin: auto;
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  text-decoration: none;
+}
+.createDog input {
+  padding: 6px 12px;
+  margin: 4px 0;
+  box-sizing: border-box;
+  margin-left: 5px;
+  margin-right: 5px;
+  border: 2px solid #ffea27;
+  border-radius: 4px;
+}
+
+.createDog input:focus {
+  border: 3px solid black;
+}
+
+.createDog label {
+  font-size: 18px;
+  font-weight: normal;
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
+.createDog select {
+  width: 15%;
+  padding: 6px 12px;
+  border-color: #ffea27;
+  border-radius: 4px;
+  background-color: white;
+}
+.DogPic {
+  position: absolute;
+  top: 176px;
+  left: 940px;
+}
+
+.CreateButton {
+  position: absolute;
+  bottom: 110px;
+  left: 450px;
+  background-color: #ffea27;
+  border-radius: 10px;
+  color: black;
+  padding: 10px 35px;
+  justify-content: center;
+  font-size: 40px;
+  font-family: Calibri;
+  margin: auto;
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  text-decoration: none;
+}
+.CreateButton:disabled {
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+
+.listTemp {
+  display: inline;
+}
+
+.error {
+  position: absolute;
+  top: 90px;
+  left: 280px;
+  color: #ab3ed8;
+  font-weight: bold;
+  margin-left: 10px;
+}
+.createDog h1 {
+  position: absolute;
+  font-size: 40px;
+  top: 15px;
+  left: 550px;
+}
+
+.createDog ul {
+  columns: 5;
+  -webkit-columns: 5;
+  -moz-columns: 5;
+  display: flex;
+  justify-content: flex-start;
+  margin-right: 300px;
+}
+
+.createDog li {
+  padding-right: 30px;
+  list-style: none;
+}
+
+.createDog span {
+  font-weight: bold;
+  color: #ab3ed8;
+  cursor: pointer;
+}

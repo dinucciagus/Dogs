@@ -1,17 +1,15 @@
 import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-// import { Link } from "react-router-dom";
 import { getDogsByName } from "../actions";
 import { useSelector } from "react-redux";
+import "./styles/SearchBar.css";
+import lupa from "../assets/lupa.png";
 
-//importar css para darle estilo.
-
-function SearchBar() {
+function SearchBar({ setCurrentPage, setInputPage }) {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
-  const dogs = useSelector((state) => state.dogs);
-  // const name = useSelector (state => state.name);
+  // const dogs = useSelector((state) => state.dogs);
 
   function handleInput(e) {
     e.preventDefault();
@@ -19,23 +17,38 @@ function SearchBar() {
   }
 
   function handleSubmit(e) {
-    e.preventDefault();
-
     if (name !== "") {
+      setCurrentPage(1);
+      setInputPage(1);
       dispatch(getDogsByName(name));
       setName("");
     }
   }
+  const onKeyDown = (e) => {
+    if (e.keyCode === 13) {
+      handleSubmit(e);
+    }
+  };
 
   return (
-    <div>
+    <div className="search">
       <input
+        className="inputsearch"
         onChange={(e) => handleInput(e)}
         type="text"
         value={name}
+        onKeyDown={(e) => onKeyDown(e)}
         placeholder="Search for a dog breed ..."
       />
-      <input type="submit" value="Search" onClick={(e) => handleSubmit(e)} />
+      <button classname="submitsearch" onClick={(e) => handleSubmit(e)}>
+        <img src={lupa} alt="Search" />
+      </button>
+      {/* <input
+        classname="submitsearch"
+        type="submit"
+        value="Search"
+        onClick={(e) => handleSubmit(e)}
+      /> */}
     </div>
   );
 }
