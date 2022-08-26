@@ -84,7 +84,6 @@ module.exports = (sequelize) => {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: true,
-        //distingo los dogs de la api con los creados por el cliente.
       },
     },
     { timestamps: false }
