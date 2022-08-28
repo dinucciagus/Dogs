@@ -7,6 +7,9 @@ import Error404 from "./Error404.js"; // si no encuentro el dog muestro el 404
 import LOADING from "../assets/loadingdogs.gif";
 import "./styles/Details.css";
 
+const regexExp =
+  /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
+
 export default function DogDetails() {
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -42,6 +45,9 @@ export default function DogDetails() {
               <button className="b">Back to Home!</button>
             </Link>
           </div>
+          {regexExp.test(id) ? (
+            <button className="deleteDog"> X </button>
+          ) : null}
           <div className="details">
             <img
               src={

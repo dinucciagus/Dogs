@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const axios = require("axios");
-const { getAllDogs } = require("../controllers/controllers.js");
+const { getAllDogs, getCreatedDog } = require("../controllers/controllers.js");
 
 const dogs = Router();
 
@@ -35,6 +35,22 @@ dogs.get("/", async (req, res) => {
             .json({ error: "The indicated breed does not exists" });
     } else {
       res.status(200).json(listOfDogs);
+    }
+  } catch (error) {
+    console.log({ error: error.message });
+  }
+});
+
+dogs.delete("/delete/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const dog = await getCreatedDog(id);
+    console.log(dog);
+    if (!dog) {
+      res.status(404).send("The selected breed is not a created breed");
+    } else {
+      await dog.destroy();
+      res.status(200).send("The selected breed was deleted");
     }
   } catch (error) {
     console.log({ error: error.message });

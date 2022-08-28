@@ -8,6 +8,7 @@ import {
   GET_DOGS_BY_NAME,
   CREATE_DOG,
   GET_DOG_DETAIL,
+  DELETE_DOG,
 } from "../actions";
 
 const initialState = {
@@ -132,6 +133,9 @@ export default function rootReducer(state = initialState, action) {
         dogsOrigin: createdFilter,
         dogs: intersectionB,
       };
+    case DELETE_DOG:
+      return { ...state };
+
     default:
       return state;
   }

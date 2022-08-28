@@ -9,6 +9,7 @@ export const ORDER_BY_NAME = "ORDER_BY_NAME";
 export const GET_DOGS_BY_NAME = "GET_DOGS_BY_NAME";
 export const CREATE_DOG = "CREATE_DOG";
 export const GET_DOG_DETAIL = "GET_DOG_DETAIL";
+export const DELETE_DOG = "DELETE_DOG";
 
 export function getDogs() {
   return async function (dispatch) {
@@ -101,6 +102,22 @@ export function getDogDetails(id) {
       console.log(error.message);
       return dispatch({
         type: GET_DOG_DETAIL,
+        payload: { error: error.message },
+      });
+    }
+  };
+}
+
+export function deleteDog(id) {
+  return async function (dispatch) {
+    try {
+      await axios.delete(`/dogs/delete/${id}`);
+      return dispatch({
+        type: DELETE_DOG,
+      });
+    } catch (error) {
+      return dispatch({
+        type: DELETE_DOG,
         payload: { error: error.message },
       });
     }
