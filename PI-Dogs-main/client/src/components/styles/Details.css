@@ -104,3 +104,16 @@
   line-height: 25px;
   margin: 8px;
 }
+
+.deleteDog {
+  position: absolute;
+  top: 610px;
+  left: 700px;
+  color: red;
+  font-weight: bold;
+  font-size: 20px;
+  border-color: #ffea27;
+  font-family: Calibri;
+  border-radius: 30px;
+  padding: 5px 10px;
+}

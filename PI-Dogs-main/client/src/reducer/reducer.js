@@ -9,6 +9,7 @@ import {
   CREATE_DOG,
   GET_DOG_DETAIL,
   DELETE_DOG,
+  CLEAN_DETAIL,
 } from "../actions";
 
 const initialState = {
@@ -135,7 +136,8 @@ export default function rootReducer(state = initialState, action) {
       };
     case DELETE_DOG:
       return { ...state };
-
+    case CLEAN_DETAIL:
+      return { ...state, dogDetails: {} };
     default:
       return state;
   }

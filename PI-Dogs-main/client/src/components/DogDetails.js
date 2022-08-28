@@ -1,16 +1,20 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getDogDetails } from "../actions";
+import { getDogDetails, deleteDog, cleanDetail } from "../actions";
 import Error404 from "./Error404.js"; // si no encuentro el dog muestro el 404
 import LOADING from "../assets/loadingdogs.gif";
 import "./styles/Details.css";
 
-const regexExp =
-  /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
+const isUuid = function (id) {
+  return /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi.test(
+    id
+  );
+};
 
 export default function DogDetails() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const { id } = useParams();
   useEffect(() => {
@@ -28,6 +32,17 @@ export default function DogDetails() {
     image,
     temperaments,
   } = dogDetails;
+
+  function handleDeleteDog(e) {
+    dispatch(deleteDog(id));
+    alert("Dog deleted succesfully");
+    dispatch(cleanDetail());
+    history.push("/home");
+  }
+
+  function handleClickB(e) {
+    dispatch(cleanDetail());
+  }
   return (
     <div>
       {dogDetails.error ? (
@@ -42,11 +57,15 @@ export default function DogDetails() {
         <div>
           <div>
             <Link className="bContainer" to="/home">
-              <button className="b">Back to Home!</button>
+              <button onClick={(e) => handleClickB(e)} className="b">
+                Back to Home!
+              </button>
             </Link>
           </div>
-          {regexExp.test(id) ? (
-            <button className="deleteDog"> X </button>
+          {isUuid(id) ? (
+            <button className="deleteDog" onClick={(e) => handleDeleteDog(e)}>
+              Delete dog
+            </button>
           ) : null}
           <div className="details">
             <img

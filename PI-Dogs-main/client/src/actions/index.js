@@ -10,6 +10,7 @@ export const GET_DOGS_BY_NAME = "GET_DOGS_BY_NAME";
 export const CREATE_DOG = "CREATE_DOG";
 export const GET_DOG_DETAIL = "GET_DOG_DETAIL";
 export const DELETE_DOG = "DELETE_DOG";
+export const CLEAN_DETAIL = "CLEAN_DETAIL";
 
 export function getDogs() {
   return async function (dispatch) {
@@ -123,3 +124,9 @@ export function deleteDog(id) {
     }
   };
 }
+
+export const cleanDetail = () => {
+  return {
+    type: CLEAN_DETAIL,
+  };
+};

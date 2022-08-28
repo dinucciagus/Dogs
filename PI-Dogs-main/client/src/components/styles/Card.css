@@ -61,9 +61,3 @@
   flex-direction: column;
   justify-content: center;
 }
-
-.deleteDog {
-  color: red;
-  font-weight: bold;
-  background-color: blueviolet;
-}
