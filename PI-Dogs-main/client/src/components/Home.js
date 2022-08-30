@@ -8,6 +8,7 @@ import {
   filterByOrigin,
   orderByWeight,
   orderByName,
+  cleanDogs,
 } from "../actions";
 import { Link } from "react-router-dom";
 import DogCard from "./DogCard";
@@ -16,7 +17,6 @@ import SearchBar from "./SearchBar";
 import LOADING from "../assets/loadingdogs.gif";
 import logo from "../assets/logo.png";
 import "./styles/home.css";
-import Error404 from "./Error404";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -45,7 +45,6 @@ export default function Home() {
     e.preventDefault();
     setCurrentPage(1);
     setInputPage(1);
-    console.log(allDogs);
     dispatch(filterByTemperaments(e.target.value));
   }
 
@@ -95,15 +94,18 @@ export default function Home() {
           </button>
         </div>
         <div className="filterContainer">
-          <select defaultValue="title" onChange={(e) => handleOrderByName(e)}>
-            <option value="title" disabled selected={selected}>
+          <select defaultValue="default" onChange={(e) => handleOrderByName(e)}>
+            <option value="default" disabled selected={selected}>
               Order by: Alphabet
             </option>
             <option value="name_asc">A-Z</option>
             <option value="name_desc">Z-A </option>
           </select>
-          <select defaultValue="title" onChange={(e) => handleOrderByWeight(e)}>
-            <option value="title" disabled selected={selected}>
+          <select
+            defaultValue="default"
+            onChange={(e) => handleOrderByWeight(e)}
+          >
+            <option value="default" disabled selected={selected}>
               Order by: weight
             </option>
             <option value="weight_asc">Ascendent </option>
@@ -112,24 +114,25 @@ export default function Home() {
           <SearchBar
             setCurrentPage={setCurrentPage}
             setInputPage={setInputPage}
+            setSelected={setSelected}
           />
           <select
-            defaultValue="title"
+            defaultValue="default"
             onChange={(e) => handleFilterByOrigin(e)}
           >
-            <option value="title" disabled selected={selected}>
+            <option value="default" disabled selected={selected}>
               Filter by: Origin
             </option>
             <option value="created">Created</option>
             <option value="from api">Existing</option>
           </select>
           <select
-            defaultValue="title"
+            defaultValue="default"
             onChange={(e) => {
               handleFilterTemp(e);
             }}
           >
-            <option value="title" disabled selected={selected}>
+            <option value="default" disabled selected={selected}>
               Filter by: Temperament
             </option>
             <option value="All"> All </option>

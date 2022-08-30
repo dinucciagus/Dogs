@@ -13,7 +13,6 @@ export default function DogCreate() {
   const history = useHistory();
   const [errors, setErrors] = useState({});
   const [errorsTemps, setErrorsTemps] = useState({});
-  // const [,selectDis setSelectDis] = useState(false);
   const [isdisabled, setIsDisabled] = useState(true);
   const [input, setInput] = useState({
     name: "",
@@ -147,7 +146,6 @@ export default function DogCreate() {
       ...input,
       temperaments: input.temperaments.filter((temp) => temp !== t),
     });
-    console.log(val, valTemp);
     if (JSON.stringify(val) === "{}" && JSON.stringify(valTemp) === "{}") {
       setIsDisabled(false);
     } else {
@@ -166,7 +164,6 @@ export default function DogCreate() {
           "https://cutewallpaper.org/24/dog-gif-transparent/cat-dog-gif-storyboard-on-behance.gif",
       });
     }
-
     dispatch(createDog(input));
     alert("Dog created successfully! =)");
     setInput({

@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getDogDetails, deleteDog, cleanDetail } from "../actions";
+import { getDogDetails, deleteDog, cleanDetail, cleanDogs } from "../actions";
 import Error404 from "./Error404.js"; // si no encuentro el dog muestro el 404
 import LOADING from "../assets/loadingdogs.gif";
 import "./styles/Details.css";
@@ -37,6 +37,7 @@ export default function DogDetails() {
     dispatch(deleteDog(id));
     alert("Dog deleted succesfully");
     dispatch(cleanDetail());
+    dispatch(cleanDogs());
     history.push("/home");
   }
 

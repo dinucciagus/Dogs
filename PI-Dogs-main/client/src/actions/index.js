@@ -11,6 +11,7 @@ export const CREATE_DOG = "CREATE_DOG";
 export const GET_DOG_DETAIL = "GET_DOG_DETAIL";
 export const DELETE_DOG = "DELETE_DOG";
 export const CLEAN_DETAIL = "CLEAN_DETAIL";
+export const CLEAN_DOGS = "CLEAN_DOGS";
 
 export function getDogs() {
   return async function (dispatch) {
@@ -26,7 +27,7 @@ export function getDogs() {
 export function createDog(payload) {
   return async function (dispatch) {
     try {
-      var json = await axios.post("/dog", payload);
+      var json = await axios.post("/dogs", payload);
       return json;
     } catch (error) {
       console.log({ error: error.message });
@@ -62,6 +63,23 @@ export function getTemperaments() {
     }
   };
 }
+
+// export function getTemperaments() {
+//   return function (dispatch) {
+//     try {
+//       fetch("http://localhost:3001/temperaments")
+//         .then((res) => res.json())
+//         .then((res) => {
+//           dispatch({
+//             type: "GET_TEMPERAMENTS",
+//             payload: res,
+//           });
+//         });
+//     } catch (error) {
+//       console.log({ error: error.message });
+//     }
+//   };
+// }
 
 export function orderByWeight(payload) {
   return {
@@ -128,5 +146,11 @@ export function deleteDog(id) {
 export const cleanDetail = () => {
   return {
     type: CLEAN_DETAIL,
+  };
+};
+
+export const cleanDogs = () => {
+  return {
+    type: CLEAN_DOGS,
   };
 };

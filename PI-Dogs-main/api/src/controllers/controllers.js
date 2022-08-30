@@ -91,8 +91,7 @@ const getAllDogs = async () => {
 
 const getCreatedDog = async (id) => {
   try {
-    const found = await Dog.findByPk(id);
-    console.log(found);
+    const found = await Dog.findByPk(id, { include: Temperament });
     return found;
   } catch (error) {
     console.log({ error: error.message });

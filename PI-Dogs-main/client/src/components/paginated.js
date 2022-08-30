@@ -36,6 +36,15 @@ export default function Paginated({
     setInputPage(e.target.value);
   };
 
+  // const pageNumber = [];
+  // for (let i = 1; i <= max; i++) {
+  //   pageNumber.push(i);
+  // }
+
+  // const onClick = (e) => {
+  //   setCurrentPage(e.target.value);
+  // };
+
   return (
     <div className="container">
       <button
@@ -89,5 +98,19 @@ export default function Paginated({
         </svg>
       </button>
     </div>
+
+    // <div>
+    //   <ul>
+    //     {pageNumber.length
+    //       ? pageNumber.map((p) => (
+    //           <li value={p}>
+    //             <button value={p} onClick={(e) => onClick(e)}>
+    //               {p}
+    //             </button>
+    //           </li>
+    //         ))
+    //       : null}
+    //   </ul>
+    // </div>
   );
 }

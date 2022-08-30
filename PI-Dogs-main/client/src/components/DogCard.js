@@ -1,7 +1,5 @@
 import React from "react";
-// import "./styles/Card.css";
 import "./styles/Card.css";
-
 export default function DogCard({
   image,
   name,
@@ -11,7 +9,7 @@ export default function DogCard({
   id,
 }) {
   if (temperaments === undefined) {
-    temperaments = ["No temperaments associated to this breed"];
+    temperaments = [{ name: "No temperaments associated to this breed" }];
   }
   return (
     <div key={id} className="card">

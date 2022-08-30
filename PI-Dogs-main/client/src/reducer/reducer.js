@@ -10,6 +10,7 @@ import {
   GET_DOG_DETAIL,
   DELETE_DOG,
   CLEAN_DETAIL,
+  CLEAN_DOGS,
 } from "../actions";
 
 const initialState = {
@@ -63,7 +64,8 @@ export default function rootReducer(state = initialState, action) {
               }
               return 0;
             })
-          : state.dogs.sort(function (a, b) {
+          : action.payload === "name_desc"
+          ? state.dogs.sort(function (a, b) {
               if (a.name > b.name) {
                 return -1;
               }
@@ -71,7 +73,8 @@ export default function rootReducer(state = initialState, action) {
                 return 1;
               }
               return 0;
-            });
+            })
+          : state.dogs;
 
       return {
         ...state,
@@ -84,9 +87,11 @@ export default function rootReducer(state = initialState, action) {
           ? state.dogs.sort(function (a, b) {
               return a.weight_Min - b.weight_Min;
             })
-          : state.dogs.sort(function (a, b) {
+          : action.payload === "weight_desc"
+          ? state.dogs.sort(function (a, b) {
               return b.weight_Min - a.weight_Min;
-            });
+            })
+          : state.dogs;
 
       return {
         ...state,
@@ -138,6 +143,8 @@ export default function rootReducer(state = initialState, action) {
       return { ...state };
     case CLEAN_DETAIL:
       return { ...state, dogDetails: {} };
+    case CLEAN_DOGS:
+      return { ...state, dogs: [] };
     default:
       return state;
   }
