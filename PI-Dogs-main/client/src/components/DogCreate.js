@@ -28,56 +28,53 @@ export default function DogCreate() {
   const isUrlImage = function (url) {
     return /^https?:\/\/.+\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
   };
+  const lettersOnlyCapitalFirst = function (str) {
+    return /^[A-Z]+[a-zA-Z\s]{1,29}$/.test(str);
+  };
+
+  const onlyNumbers = function (str) {
+    return /^[1-9][0-9]{0,2}$/.test(str);
+  };
 
   function validate(input) {
     let errors = {};
     if (
-      !input.name ||
       typeof input.name !== "string" ||
-      input.name.length < 2 ||
-      input.name[0] !== input.name[0].toUpperCase()
+      !lettersOnlyCapitalFirst(input.name)
     ) {
       errors.name =
-        "*The name of the breed should be at least 2 letters long and should start with uppercase";
+        "*The name of the breed should be from 2 to 30 letters long and should start with uppercase";
     } else if (
       dogs.find((p) => p.name.toLowerCase() === input.name.toLowerCase())
     ) {
       errors.name = "*A breed with that name already exists";
+    } else if (!onlyNumbers(input.height_Min)) {
+      errors.min_height =
+        "*The minimum height should be a positive integer number";
     } else if (
-      !input.height_Min ||
-      isNaN(input.height_Min) ||
-      input.height_Min < 0
-    ) {
-      errors.min_height = "*The minimum height should be a positive number";
-    } else if (
-      !input.height_Max ||
-      isNaN(input.height_Max) ||
+      !onlyNumbers(input.height_Max) ||
       Number(input.height_Max) < input.height_Min
     ) {
       errors.max_height =
-        "*The maximum height should be greater than the minimum height";
+        "*The maximum height should be a integer number greater or equal than the minimum height";
+    } else if (!onlyNumbers(input.weight_Min)) {
+      errors.min_weight =
+        "*The minimum weight should be a positive integer number";
     } else if (
-      !input.weight_Min ||
-      isNaN(input.weight_Min) ||
-      input.weight_Min < 0
-    ) {
-      errors.min_weight = "*The minimum weight should be a positive number";
-    } else if (
-      !input.weight_Max ||
-      isNaN(input.weight_Max) ||
+      !onlyNumbers(input.weight_Max) ||
       Number(input.weight_Max) < input.weight_Min
     ) {
       errors.max_weight =
-        "*The maximum weight should be greater than the minimum weight";
-    } else if (isNaN(input.life_span_Min) || input.life_span_Min < 0) {
+        "*The maximum weight should be a integer number greater or equal  than the minimum weight";
+    } else if (!onlyNumbers(input.life_span_Min)) {
       errors.life_span_Min =
-        "*The minimum life span should be a positive number";
+        "*The minimum life span should be a positive integer number";
     } else if (
-      isNaN(input.life_span_Max) ||
+      !onlyNumbers(input.life_span_Max) ||
       Number(input.life_span_Max) < input.life_span_Min
     ) {
       errors.life_span_Max =
-        "*The maximum life span should be greater than the minimum life span";
+        "*The maximum life span should be a integer number greater or equal  than the minimum life span";
     } else if (!isUrlImage(input.image) && input.image.length > 0) {
       errors.image =
         "*The image should be a jpg, jpeg, png, webp, avif, gif or svg";
@@ -165,7 +162,7 @@ export default function DogCreate() {
       });
     }
     dispatch(createDog(input));
-    alert("Dog created successfully! =)");
+    alert("Your dog was succesfully created");
     setInput({
       name: "",
       height_Min: 0,
@@ -200,7 +197,9 @@ export default function DogCreate() {
             <p className="error">{errors.life_span_Max}</p>
           )}
           {errors.image && <p className="error">{errors.image}</p>}
-          {errorsTemps.temp > 0 && <p className="error">{errorsTemps.temp}</p>}
+          {errorsTemps.temp && JSON.stringify(errors) === "{}" && (
+            <p className="error">{errorsTemps.temp}</p>
+          )}
         </div>
         <form onSubmit={(e) => handleSubmit(e)}>
           <div>

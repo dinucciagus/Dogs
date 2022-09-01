@@ -25,31 +25,23 @@ export function getDogs() {
 }
 
 export function createDog(payload) {
-  return async function (dispatch) {
+  return async function () {
     try {
       var json = await axios.post("/dogs", payload);
       return json;
     } catch (error) {
       console.log({ error: error.message });
-      alert("Sorry! The dog could not be created. Try again!  ");
     }
   };
 }
 
 export function getDogsByName(name) {
   return async function (dispatch) {
-    try {
-      var json = await axios.get("/dogs?name=" + name);
-      return dispatch({
-        type: GET_DOGS_BY_NAME,
-        payload: json.data,
-      });
-    } catch (error) {
-      console.log({ error: error.message });
-      alert(
-        "Sorry! There is no dog with the given name... Search for another =) "
-      );
-    }
+    var json = await axios.get("/dogs?name=" + name);
+    return dispatch({
+      type: GET_DOGS_BY_NAME,
+      payload: json.data,
+    });
   };
 }
 

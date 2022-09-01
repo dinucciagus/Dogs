@@ -43,6 +43,7 @@ export default function DogDetails() {
 
   function handleClickB(e) {
     dispatch(cleanDetail());
+    dispatch(cleanDogs());
   }
   return (
     <div>

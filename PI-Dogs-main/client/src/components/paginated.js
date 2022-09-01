@@ -9,19 +9,19 @@ export default function Paginated({
   setInputPage,
 }) {
   const nextPage = () => {
-    setInputPage(inputPage + 1);
-    setCurrentPage(currentPage + 1);
+    setInputPage(parseInt(currentPage) + 1);
+    setCurrentPage(parseInt(currentPage) + 1);
   };
   const backPage = () => {
-    setInputPage(inputPage - 1);
-    setCurrentPage(currentPage - 1);
+    setInputPage(parseInt(currentPage) - 1);
+    setCurrentPage(parseInt(currentPage) - 1);
   };
 
   const onKeyDown = (e) => {
     if (e.keyCode === 13) {
-      setCurrentPage(parseInt(e.target.value));
       if (
-        parseInt(e.target.value < 1 || parseInt(e.target.value) > max) ||
+        parseInt(e.target.value) < 1 ||
+        parseInt(e.target.value) > max ||
         isNaN(parseInt(e.target.value))
       ) {
         setCurrentPage(1);
@@ -47,11 +47,7 @@ export default function Paginated({
 
   return (
     <div className="container">
-      <button
-        onClick={backPage}
-        disabled={currentPage === 1 || currentPage < 1}
-        className="button"
-      >
+      <button onClick={backPage} disabled={currentPage <= 1} className="button">
         <svg
           id="Layer_1"
           data-name="Layer 1"
@@ -79,7 +75,7 @@ export default function Paginated({
       <p> of {max} </p>
       <button
         onClick={nextPage}
-        disabled={currentPage === max || currentPage > max}
+        disabled={currentPage >= max}
         className="button"
       >
         <svg

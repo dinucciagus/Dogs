@@ -43,10 +43,17 @@ export default function rootReducer(state = initialState, action) {
         temperaments: action.payload,
       };
     case GET_DOGS_BY_NAME:
-      return {
-        ...state,
-        dogs: action.payload,
-      };
+      if (action.payload.length === 0) {
+        return {
+          ...state,
+          dogs: ["error"],
+        };
+      } else {
+        return {
+          ...state,
+          dogs: action.payload,
+        };
+      }
     case GET_DOG_DETAIL:
       return {
         ...state,

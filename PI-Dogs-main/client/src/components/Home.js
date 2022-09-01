@@ -8,7 +8,6 @@ import {
   filterByOrigin,
   orderByWeight,
   orderByName,
-  cleanDogs,
 } from "../actions";
 import { Link } from "react-router-dom";
 import DogCard from "./DogCard";

@@ -30,8 +30,9 @@ dogs.get("/", async (req, res) => {
       breed.length > 0
         ? res.status(200).send(breed)
         : res
-            .status(404)
-            .json({ error: "The indicated breed does not exists" });
+            // .status(404)
+            .json([]);
+      // .json({ error: "The indicated breed does not exists" });
     } else {
       res.status(200).json(listOfDogs);
     }
@@ -59,48 +60,56 @@ dogs.post("/", async (req, res) => {
       return /^https?:\/\/.+\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
     };
 
+    const lettersOnlyCapitalFirst = function (str) {
+      return /^[A-Z]+[a-zA-Z\s]{1,29}$/.test(str);
+    };
+
+    const onlyNumbers = function (str) {
+      return /^[1-9][0-9]{0,2}$/.test(str);
+    };
+
     let alreadyExists = await Dog.findOne({ where: { name: name } });
 
-    if (
-      !name ||
-      typeof name !== "string" ||
-      name.length < 2 ||
-      name[0] !== name[0].toUpperCase()
-    ) {
+    if (typeof name !== "string" || !lettersOnlyCapitalFirst(name)) {
       res
         .status(400)
         .send(
-          "The name of the breed should be at least 2 letters long and should start with uppercase"
+          "The name of the breed should be from 2 to 30 letters long and should start with Uppercase"
         );
     } else if (alreadyExists) {
       res.status(400).send("A breed with this name already exists");
-    } else if (!height_Min || isNaN(height_Min) || height_Min < 0) {
-      res.status(400).send("The minimum height should be a positive number");
-    } else if (
-      !height_Max ||
-      isNaN(height_Max) ||
-      Number(height_Max) < height_Min
-    ) {
+    } else if (!onlyNumbers(height_Min)) {
       res
         .status(400)
-        .send("The maximum height should be greater than the minimum height");
-    } else if (!weight_Min || isNaN(weight_Min) || weight_Min < 0) {
-      res.status(400).send("The minimum weight should be a positive number");
-    } else if (
-      !weight_Max ||
-      isNaN(weight_Max) ||
-      Number(weight_Max) < weight_Min
-    ) {
-      res
-        .status(400)
-        .send("The maximum weight should be greater than the minimum weight");
-    } else if (isNaN(life_span_Min) || life_span_Min < 0) {
-      res.status(400).send("The minimum life span should be a positive number");
-    } else if (isNaN(life_span_Max) || Number(life_span_Max) < life_span_Min) {
+        .send("The minimum height should be a positive integer number");
+    } else if (!onlyNumbers(height_Max) || Number(height_Max) < height_Min) {
       res
         .status(400)
         .send(
-          "The maximum life span should be greater than the minimum life span"
+          "The maximum height should be a integer number greater than the minimum height"
+        );
+    } else if (!onlyNumbers(weight_Min)) {
+      res
+        .status(400)
+        .send("The minimum weight should be a positive integer number");
+    } else if (!onlyNumbers(weight_Max) || Number(weight_Max) < weight_Min) {
+      res
+        .status(400)
+        .send(
+          "The maximum weight should be a integer number greater than the minimum weight"
+        );
+    } else if (!onlyNumbers(life_span_Min)) {
+      res
+        .status(400)
+        .send("The minimum life span should be a positive integer number");
+    } else if (
+      !onlyNumbers(life_span_Max) ||
+      Number(life_span_Max) < life_span_Min
+    ) {
+      res
+        .status(400)
+        .send(
+          "The maximum life span should be a integer number greater than the minimum life span"
         );
     } else if (!isUrlImage(image) && image.length > 0) {
       res
@@ -126,6 +135,22 @@ dogs.post("/", async (req, res) => {
       });
       dogCreated.addTemperament(temperamentsOfDog);
       res.send("Your new dog was successfully created");
+    }
+  } catch (error) {
+    console.log({ error: error.message });
+    res.send("Sorry, your dog could not be created! Try again...");
+  }
+});
+
+dogs.delete("/delete/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const dog = await getCreatedDog(id);
+    if (!dog) {
+      res.status(404).send("The selected breed is not a created breed");
+    } else {
+      await dog.destroy();
+      res.status(200).send("The selected breed was deleted");
     }
   } catch (error) {
     console.log({ error: error.message });
@@ -170,21 +195,6 @@ dogs.put("/update/:id", async (req, res) => {
       });
       dogUpdate.setTemperaments(temperamentsOfDog);
       res.status(200).send("The selected breed has been updated");
-    }
-  } catch (error) {
-    console.log({ error: error.message });
-  }
-});
-
-dogs.delete("/delete/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    const dog = await getCreatedDog(id);
-    if (!dog) {
-      res.status(404).send("The selected breed is not a created breed");
-    } else {
-      await dog.destroy();
-      res.status(200).send("The selected breed was deleted");
     }
   } catch (error) {
     console.log({ error: error.message });

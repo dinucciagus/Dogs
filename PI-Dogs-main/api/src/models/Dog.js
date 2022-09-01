@@ -36,7 +36,7 @@ module.exports = (sequelize) => {
       height_Min: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        validate: { min: 0 },
+        validate: { min: 1 },
       },
       height_Max: {
         type: DataTypes.INTEGER,
@@ -54,7 +54,7 @@ module.exports = (sequelize) => {
       weight_Min: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        validate: { min: 0 },
+        validate: { min: 1 },
       },
       weight_Max: {
         type: DataTypes.INTEGER,

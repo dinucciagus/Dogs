@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { getAllDogs, getInfoApi } = require("../controllers/controllers.js");
+const { getAllDogs } = require("../controllers/controllers.js");
 const { Temperament } = require("../db.js");
 const temperament = Router();
 
