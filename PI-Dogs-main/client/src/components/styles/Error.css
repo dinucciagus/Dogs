@@ -6,6 +6,13 @@
   align-items: center;
 }
 .ErrorContainer img {
-  width: 100vw;
+  width: 80vw;
   height: auto;
+}
+
+@media screen and (max-width: 800px) {
+  .ErrorContainer img {
+    width: 90vw;
+    height: auto;
+  }
 }
