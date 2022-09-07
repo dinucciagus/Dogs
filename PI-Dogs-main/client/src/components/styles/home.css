@@ -6,9 +6,11 @@ body {
     rgba(255, 241, 107, 1) 35%,
     rgba(255, 234, 39, 1) 100%
   );
-  min-height: 720px;
-  background-size: contain;
+  min-height: 100vh;
+  /* background-size: contain; */
+  background-size: cover;
   background-position: center center;
+  /* background-repeat: no-repeat; */
 }
 
 .allContainer {
@@ -123,6 +125,7 @@ body {
 .errorMatch {
   text-align: center;
   font-size: 25px;
+  margin-left: 5px;
 }
 
 .errorMatch button {
@@ -134,4 +137,80 @@ body {
   font-size: 30px;
   color: #ab3ed8;
   font-weight: bold;
+}
+
+@media screen and (max-width: 1100px) {
+  .cardsContainer {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
+
+  .buttonsContainer {
+    flex-direction: row;
+    margin-top: 10px;
+    margin-left: 30px;
+    margin-right: 30px;
+  }
+  .filterContainer {
+    display: block;
+    margin-left: 10%;
+    margin-right: 10%;
+    height: auto;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+  }
+
+  .filterContainer select {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+  }
+
+  .search {
+    width: auto;
+    justify-content: space-around;
+  }
+  .logoimg {
+    width: 40%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .cardsContainer {
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  /* .buttonsContainer {
+    flex-direction: column;
+  }
+  .buttons {
+    margin-top: 10px;
+  } */
+
+  .filterContainer select {
+    width: 45%;
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: small;
+    width: fit-content;
+  }
+  .search {
+    width: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .buttons {
+    font-size: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-bottom: 0px;
+  }
 }

@@ -179,135 +179,145 @@ export default function DogCreate() {
 
   return (
     <div className="Containercreate">
-      <div className="createDog">
-        <Link to="/home" className="Back">
-          <button>Back</button>
-        </Link>
-        <h1 ClasName="dogTitle"> Create your dog</h1>
-        <div className="errorContainer">
-          {errors.name && <p className="error">{errors.name}</p>}
-          {errors.min_height && <p className="error">{errors.min_height}</p>}
-          {errors.max_height && <p className="error">{errors.max_height}</p>}
-          {errors.min_weight && <p className="error">{errors.min_weight}</p>}
-          {errors.max_weight && <p className="error">{errors.max_weight}</p>}
-          {errors.life_span_Min && (
-            <p className="error">{errors.life_span_Min}</p>
-          )}
-          {errors.life_span_Max && (
-            <p className="error">{errors.life_span_Max}</p>
-          )}
-          {errors.image && <p className="error">{errors.image}</p>}
-          {errorsTemps.temp && JSON.stringify(errors) === "{}" && (
-            <p className="error">{errorsTemps.temp}</p>
-          )}
+      <div className="CreateCard">
+        <div className="topContainer">
+          <Link to="/home" className="Back">
+            <button>Back</button>
+          </Link>
+          <h1 ClasName="dogTitle"> Create your dog breed!</h1>
         </div>
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <div>
-            <label>Name: </label>
-            <input
-              type="text"
-              value={input.name}
-              name="name"
-              onChange={(e) => handleChange(e)}
-              placeholder="Type the breed name..."
-            />
+        <div className="createDog">
+          <div className="errorContainer">
+            {errors.name && <p className="error">{errors.name}</p>}
+            {errors.min_height && <p className="error">{errors.min_height}</p>}
+            {errors.max_height && <p className="error">{errors.max_height}</p>}
+            {errors.min_weight && <p className="error">{errors.min_weight}</p>}
+            {errors.max_weight && <p className="error">{errors.max_weight}</p>}
+            {errors.life_span_Min && (
+              <p className="error">{errors.life_span_Min}</p>
+            )}
+            {errors.life_span_Max && (
+              <p className="error">{errors.life_span_Max}</p>
+            )}
+            {errors.image && <p className="error">{errors.image}</p>}
+            {errorsTemps.temp && JSON.stringify(errors) === "{}" && (
+              <p className="error">{errorsTemps.temp}</p>
+            )}
           </div>
-          <div>
-            <label>Minimum height: </label>
-            <input
-              type="number"
-              value={input.height_Min}
-              name="height_Min"
-              onChange={(e) => handleChange(e)}
-            />
-          </div>
-          <div>
-            <label>Maximum height: </label>
-            <input
-              type="number"
-              value={input.height_Max}
-              name="height_Max"
-              onChange={(e) => handleChange(e)}
-            />
-          </div>
-          <div>
-            <label>Minimum weight: </label>
-            <input
-              type="number"
-              value={input.weight_Min}
-              name="weight_Min"
-              onChange={(e) => handleChange(e)}
-            />
-          </div>
-          <div>
-            <label>Maximum weight: </label>
-            <input
-              type="number"
-              value={input.weight_Max}
-              name="weight_Max"
-              onChange={(e) => handleChange(e)}
-            />
-          </div>
-          <div>
-            <label>Life span: </label>
-            <input
-              type="number"
-              value={input.life_span_Min}
-              name="life_span_Min"
-              onChange={(e) => handleChange(e)}
-            />
-            - to -
-            <input
-              type="number"
-              value={input.life_span_Max}
-              name="life_span_Max"
-              onChange={(e) => handleChange(e)}
-            />
-            - years
-          </div>
-          <div>
-            <label>Image URL: </label>
-            <input
-              type="text"
-              value={input.image}
-              name="image"
-              onChange={(e) => handleChange(e)}
-              placeholder="Type a URL image..."
-            />
-          </div>
-          <label> Temperaments: </label>
-          <select
-            disabled={input.temperaments.length > 4}
-            onChange={(e) => handleSelect(e)}
-          >
-            {temperaments.map((t) => (
-              <option key={t.id} value={t.name}>
-                {t.name}
-              </option>
-            ))}
-          </select>
-          <div ClasName="listTemp">
-            <ul>
+          <form onSubmit={(e) => handleSubmit(e)}>
+            <div>
+              <label>Name: </label>
+              <input
+                className="inputName"
+                type="text"
+                value={input.name}
+                name="name"
+                onChange={(e) => handleChange(e)}
+                placeholder="Type the breed name..."
+              />
+            </div>
+            <div>
+              <label>Minimum height: </label>
+              <input
+                className="inputNum"
+                type="number"
+                value={input.height_Min}
+                name="height_Min"
+                onChange={(e) => handleChange(e)}
+              />
+            </div>
+            <div>
+              <label>Maximum height: </label>
+              <input
+                className="inputNum"
+                type="number"
+                value={input.height_Max}
+                name="height_Max"
+                onChange={(e) => handleChange(e)}
+              />
+            </div>
+            <div>
+              <label>Minimum weight: </label>
+              <input
+                className="inputNum"
+                type="number"
+                value={input.weight_Min}
+                name="weight_Min"
+                onChange={(e) => handleChange(e)}
+              />
+            </div>
+            <div>
+              <label>Maximum weight: </label>
+              <input
+                className="inputNum"
+                type="number"
+                value={input.weight_Max}
+                name="weight_Max"
+                onChange={(e) => handleChange(e)}
+              />
+            </div>
+            <div className="lifespan">
+              <label>Life span: </label>
+              <input
+                className="inputNum"
+                type="number"
+                value={input.life_span_Min}
+                name="life_span_Min"
+                onChange={(e) => handleChange(e)}
+              />
+              - to -
+              <input
+                className="inputNum"
+                type="number"
+                value={input.life_span_Max}
+                name="life_span_Max"
+                onChange={(e) => handleChange(e)}
+              />
+              - years
+            </div>
+            <div>
+              <label>Image URL: </label>
+              <input
+                className="inputName"
+                type="text"
+                value={input.image}
+                name="image"
+                onChange={(e) => handleChange(e)}
+                placeholder="Type a URL image..."
+              />
+            </div>
+            <label> Temperaments: </label>
+            <select
+              disabled={input.temperaments.length > 4}
+              onChange={(e) => handleSelect(e)}
+            >
+              {temperaments.map((t) => (
+                <option key={t.id} value={t.name}>
+                  {t.name}
+                </option>
+              ))}
+            </select>
+            <ul ClasName="listTemp">
               {input.temperaments.map((t) => (
-                <li id={t} onClick={() => handleDelete(t)}>
+                <li ClasName="listTemp" id={t} onClick={() => handleDelete(t)}>
                   {t} <span>X</span>
                 </li>
               ))}
             </ul>
-          </div>
 
-          <div>
-            <input
-              className="CreateButton"
-              id="create"
-              name="create"
-              type="submit"
-              value="Create dog!"
-              disabled={isdisabled}
-            />
-          </div>
-        </form>
-        <img className="DogPic" src={dogpic} alt="Dog breed" />
+            <div className="BtnCreate-container">
+              <input
+                className="CreateButton"
+                id="create"
+                name="create"
+                type="submit"
+                value="Create dog!"
+                disabled={isdisabled}
+              />
+            </div>
+          </form>
+          <img className="DogPic" src={dogpic} alt="Dog breed" />
+        </div>
       </div>
     </div>
   );

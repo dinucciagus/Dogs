@@ -24,3 +24,13 @@
   width: 35px;
   height: 35px;
 }
+
+@media screen and (max-width: 1100px) {
+  .inputsearch {
+    width: 60%;
+    height: 35px;
+    padding-left: 15px;
+  }
+  .search button {
+  }
+}

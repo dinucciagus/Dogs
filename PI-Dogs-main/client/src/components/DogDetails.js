@@ -56,7 +56,7 @@ export default function DogDetails() {
           <img src={LOADING} alt="Loading" />
         </div>
       ) : (
-        <div>
+        <div className="bodyDetail">
           <div>
             <Link className="bContainer" to="/home">
               <button onClick={(e) => handleClickB(e)} className="b">
@@ -64,11 +64,6 @@ export default function DogDetails() {
               </button>
             </Link>
           </div>
-          {isUuid(id) ? (
-            <button className="deleteDog" onClick={(e) => handleDeleteDog(e)}>
-              Delete dog
-            </button>
-          ) : null}
           <div className="details">
             <img
               src={
@@ -96,6 +91,14 @@ export default function DogDetails() {
                   <p>{t.name}</p>
                 ))}
               </div>
+              {isUuid(id) ? (
+                <button
+                  className="deleteDog"
+                  onClick={(e) => handleDeleteDog(e)}
+                >
+                  Delete dog
+                </button>
+              ) : null}
             </div>
           </div>
         </div>
