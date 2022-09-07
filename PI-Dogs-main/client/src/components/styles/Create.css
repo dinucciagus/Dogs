@@ -135,10 +135,21 @@
   display: inline;
 }
 
-.error {
+.errorContainer {
   position: absolute;
+  display: flex;
   top: 90px;
-  left: 200px;
+  justify-content: center;
+  align-items: center;
+}
+
+.error {
+  /* position: fixed; */
+  align-items: center;
+  justify-content: center;
+  top: 90px;
+  left: 15%;
+  right: 15%;
   color: #ab3ed8;
   font-weight: bold;
   margin-left: 10px;
@@ -184,8 +195,11 @@
     padding-right: 5px;
   }
   .error {
-    left: 120px;
-    width: 70vw;
+    /* left: 120px; */
+    width: 90vw;
+  }
+  .errorContainer {
+    top: 80px;
   }
 }
 
@@ -212,10 +226,12 @@
   }
 
   .error {
-    position: absolute;
     top: 140px;
-    left: 30px;
+    /* left: 30px; */
     width: 85vw;
+  }
+  .errorContainer {
+    top: 115px;
   }
 
   .CreateCard {
@@ -255,5 +271,12 @@
     margin-left: 5px;
     margin-top: 55px;
     font-size: x-large;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .errorContainer {
+    top: 120px;
+    font-size: 14px;
   }
 }
