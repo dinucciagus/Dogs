@@ -1,6 +1,6 @@
 # Individual Project - Dogs App
 
-<img height="150" src="./logo.png" />
+<img height="150" src="./PI-Dogs-main/logo.png" />
 
 ## Description
 
