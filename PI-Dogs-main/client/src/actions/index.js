@@ -49,6 +49,7 @@ export function getTemperaments() {
   return async function (dispatch) {
     try {
       var info = await axios.get("/temperaments");
+      console.log("info.data", info.data);
       return dispatch({ type: GET_TEMPERAMENTS, payload: info.data });
     } catch (error) {
       console.log({ error: error.message });
