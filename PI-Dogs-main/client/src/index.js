@@ -9,8 +9,7 @@ import axios from "axios";
 import dotenv from "dotenv";
 dotenv.config();
 
-axios.defaults.baseURL =
-  "dogs-production-282a.up.railway.app" || "http://localhost:3001";
+axios.defaults.baseURL = REACT_APP_API || "http://localhost:3001";
 
 ReactDOM.render(
   <Provider store={store}>
