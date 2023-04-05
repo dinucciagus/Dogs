@@ -38,7 +38,6 @@ export default function rootReducer(state = initialState, action) {
         ...state,
       };
     case GET_TEMPERAMENTS:
-      console.log("action.payload", action.payload);
       return {
         ...state,
         temperaments: action.payload,
