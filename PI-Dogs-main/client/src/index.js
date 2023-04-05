@@ -9,7 +9,7 @@ import axios from "axios";
 import dotenv from "dotenv";
 dotenv.config();
 
-axios.defaults.baseURL = "http://dogs-production-282a.up.railway.app";
+axios.defaults.baseURL = "https://dogs-production-282a.up.railway.app";
 
 ReactDOM.render(
   <Provider store={store}>
